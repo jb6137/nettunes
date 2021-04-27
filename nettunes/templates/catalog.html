@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Catalog</li>
+{% endblock %}
+
+{% block content %}
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Copies Available</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+        <tr>
+          <td>
+            {{ record.name }}<br>
+          </td>
+          <td>{{ record.num_available }}</td>
+          <td>
+            {% if user.is_authenticated %}
+              <form action="/request-record/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ record.id }}">
+                <button type="submit">Rent</button>
+              </form>
+            {% else %}
+              <form><button type="submit" disabled>Rent</button>></form>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
