@@ -9,34 +9,37 @@
 {% block content %}
   <h1>Active Rentals</h1>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Rented at</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for rental in rentals %}
+  {% if rentals %}
+    <table border="1px">
+      <thead>
         <tr>
-          <td>{{ rental.record.name }}</td>
-          <td>{{ rental.rented_at }}</td>
-          <td>
-            <form action="/return-rental/" method="POST">
-                {% csrf_token %}
-                <input type="hidden" name="id" value="{{ rental.id }}">
-                <button type="submit">Return</button>
-            </form>
-          </td>
+          <th>Title</th>
+          <th>Rented at</th>
+          <th></th>
         </tr>
-      {% endfor %}
-    </tbody>
+      </thead>
+      <tbody>
+        {% for rental in rentals %}
+          <tr>
+            <td>{{ rental.record.name }}</td>
+            <td>{{ rental.rented_at }}</td>
+            <td>
+              <form action="/return-rental/" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ rental.id }}">
+                  <button type="submit">Return</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    {% endif %}
   </table>
 
   <h1>Pending Requests</h1>
 
-  <table>
+  {% if requests %}
+    <table border="1px">
       <thead>
         <tr>
           <th>Order</th>
@@ -72,4 +75,5 @@
         {% endfor %}
       </tbody>
     </table>
+  {% endif %}
 {% endblock %}
