@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Account Status for {{ username }}{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">User Account</li>
+{% endblock %}
+
+{% block content %}
+  <h1>Active Rentals</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Rented at</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rental in rentals %}
+        <tr>
+          <td>{{ rental.record.name }}</td>
+          <td>{{ rental.rented_at }}</td>
+          <td>
+            <form action="/return-rental/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ rental.id }}">
+                <button type="submit">Return</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h1>Pending Requests</h1>
+
+  <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Title</th>
+          <th>Requested at</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for request in requests %}
+          <tr>
+            <td>{{ request.order }}</td>
+            <td>
+              {{ request.record.name }}<br>
+            </td>
+            <td>{{ request.requested_at }}</td>
+            <td>
+              <form action="/move-up/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{ request.id }}">
+                <button type="submit">Move Up</button>
+              </form>
+            </td>
+            <td>
+              <form action="/cancel-request/" method="POST">
+                  {% csrf_token %}
+                  <input type="hidden" name="id" value="{{ request.id }}">
+                  <button type="submit">Cancel</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

@@ -22,5 +22,7 @@ urlpatterns = [
     path('',views.catalog, name='catalog'),
     path('about/', views.about, name='about'),
     path('accounts/',include('django.contrib.auth.urls')),
+    path('user/<str:username>/', views.account, name='user'),
     path('unauthorized/', views.unauthorized, name='unauthorized'),
+    path('request-record/', views.request_record, name='request-record'),
 ]

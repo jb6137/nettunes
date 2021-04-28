@@ -10,6 +10,14 @@ class Record(models.Model):
     def __str__(self):
         return self.name
 
+    def issue(self):
+        self.num_available -= 1
+        self.save()
+
+    def turn_in(self):
+        self.num_available += 1
+        self.save()
+
 
 class Rental(models.Model):
     customer = models.ForeignKey(User, related_name='rental', on_delete=models.CASCADE)
