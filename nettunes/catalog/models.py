@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+import datetime
 
 
 class Record(models.Model):
@@ -24,6 +25,10 @@ class Rental(models.Model):
     record = models.ForeignKey(Record, related_name='rental', on_delete=models.CASCADE)
     rented_at = models.DateTimeField(auto_now_add=True)
     returned_at = models.DateTimeField(null=True)
+
+    def close_out(self):
+        self.returned_at = datetime.datetime.now()
+        self.save()
 
 
 class Request(models.Model):

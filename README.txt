@@ -9,5 +9,8 @@ Design notes:
     enough code to get this working, since I don't think I'll have enough time for
     everything.
 
-
+3.  When a user returns a record (creating a space to rent another record) the system
+    immediately tries to pull a record from her waitlisted queue. This is a very simple
+    algorithm that might not work well (fairly) in some circumstances. Using it in
+    the interest of simplicity and time.
     

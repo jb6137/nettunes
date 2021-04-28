@@ -45,3 +45,5 @@ class ViewTests(TestCase):
     # TODO: Add more tests for request_record, handle_record_request, queue_requests, etc. Skipping to save time.
     # At the very least - tests covering renting functionality is working correctly
     #   - tests covering queuing functionality works correctly
+    #   - tests covering return of rentals, and waitlisted record requests get pulled off the queue correctly
+    

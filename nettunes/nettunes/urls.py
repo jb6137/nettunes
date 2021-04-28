@@ -25,4 +25,7 @@ urlpatterns = [
     path('user/<str:username>/', views.account, name='user'),
     path('unauthorized/', views.unauthorized, name='unauthorized'),
     path('request-record/', views.request_record, name='request-record'),
+    path('return-rental/', views.return_rental, name='return-rental'),
+    path('move-up/', views.move_request_up, name='move-up'),
+    path('cancel-request/', views.cancel_request, name='cancel-request'),
 ]

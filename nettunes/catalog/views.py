@@ -75,3 +75,32 @@ def rent_record(user, record):
 def queue_request(user, record, order):
     request = Request(customer=user, record=record, order=order)
     request.save()
+
+@transaction.atomic
+def return_rental(request):
+    if request.method == "POST":
+        user = User.objects.get(id=request.user.id)
+        rental_id = request.POST.get('id')
+        rental = Rental.objects.get(id=rental_id)
+        if rental.customer != user:
+            return redirect('unauthorized')
+        record_id = rental.record_id
+        record = Record.objects.get(id=record_id)
+        record.turn_in()
+        rental.close_out()
+        if has_queue(user):
+            rent_from_queue(user)
+    return redirect('/')
+
+def has_queue(user):
+    queue = Request.objects.filter(customer=user).exclude(rented_at__isnull=False)
+    return True if queue else False
+
+def rent_from_queue(user):
+    pass
+
+def move_request_up(request):
+    return redirect('/')
+
+def cancel_request(request):
+    return redirect('/')
