@@ -13,4 +13,16 @@ Design notes:
     immediately tries to pull a record from her waitlisted queue. This is a very simple
     algorithm that might not work well (fairly) in some circumstances. Using it in
     the interest of simplicity and time.
+
+4.  In addition to tests, one thing that I skipped that if I had more time I would have added
+    (or refactored to include): Error handling layer. All top level view methods should have
+    try-catch blocks, to handle errors being passed up from downstream methods. E.g.
+    try:
+        do_something
+    except AuthError:
+        return 401
+    except InputError:
+        return 400
+    except SomethingElse:
+        return 500
     

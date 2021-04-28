@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-import datetime
+from django.utils import timezone
 
 
 class Record(models.Model):
@@ -27,7 +27,7 @@ class Rental(models.Model):
     returned_at = models.DateTimeField(null=True)
 
     def close_out(self):
-        self.returned_at = datetime.datetime.now()
+        self.returned_at = timezone.now()
         self.save()
 
 
@@ -39,7 +39,7 @@ class Request(models.Model):
     order = models.IntegerField(null=True)
 
     def fulfill(self):
-        self.rented_at = datetime.datetime.now()
+        self.rented_at = timezone.now()
         self.order = None
         self.save()
 
@@ -48,4 +48,3 @@ class Request(models.Model):
             print(f"Error. Trying to set order to {new_order}. Order should run from 1.")
         self.order = new_order
         self.save()
-        
