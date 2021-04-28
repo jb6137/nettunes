@@ -38,3 +38,14 @@ class Request(models.Model):
     rented_at = models.DateTimeField(null=True)
     order = models.IntegerField(null=True)
 
+    def fulfill(self):
+        self.rented_at = datetime.datetime.now()
+        self.order = None
+        self.save()
+
+    def reorder(self, new_order):
+        if new_order < 1:
+            print(f"Error. Trying to set order to {new_order}. Order should run from 1.")
+        self.order = new_order
+        self.save()
+        
